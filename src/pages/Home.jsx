@@ -1,18 +1,95 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useInView, useAnimation } from 'framer-motion';
-import { ArrowRight, CheckCircle2, GraduationCap, Briefcase, RefreshCw, Users, Star } from 'lucide-react';
+import { motion, useInView } from 'framer-motion';
+import {
+  ArrowRight,
+  Briefcase,
+  Building2,
+  CheckCircle2,
+  GraduationCap,
+  RefreshCw,
+  Star,
+  Users,
+} from 'lucide-react';
+import {
+  allPlacementCompanies,
+  featuredPlacementCompanies,
+} from '../data/placements';
+
+const heroRoles = [
+  'DevOps & Cloud',
+  'Data Analytics',
+  'Cyber Security',
+  'QA Automation',
+];
+
+const supportCards = [
+  {
+    icon: GraduationCap,
+    title: 'Students',
+    desc: 'Start your career on the right foot before graduation.',
+  },
+  {
+    icon: Users,
+    title: 'Freshers',
+    desc: 'Transition from university to your first major IT role.',
+  },
+  {
+    icon: Briefcase,
+    title: 'Professionals',
+    desc: 'Upskill and land higher-paying roles in leading firms.',
+  },
+  {
+    icon: RefreshCw,
+    title: 'Career Changers',
+    desc: 'Pivot from non-tech to a rewarding IT career safely.',
+  },
+];
+
+const transformationSteps = [
+  {
+    step: '01',
+    title: 'Free Consultation',
+    desc: 'We discuss your background, interests, and visa status to map out possibilities.',
+  },
+  {
+    step: '02',
+    title: 'Role Matching & Training',
+    desc: 'Structured upskilling tailored to high-demand UK roles to get you interview-ready.',
+  },
+  {
+    step: '03',
+    title: 'Job Offer & Visa',
+    desc: 'We connect you with our network, prepare you for interviews, and support via placement.',
+  },
+];
+
+const technicalRoles = [
+  'DevOps Engineering',
+  'Cloud Engineering',
+  'QA & Software Testing',
+  'Data Analysis',
+  'Cyber Security',
+  'SAP Consulting',
+];
+
+const businessRoles = [
+  'Project Management',
+  'Business Analysis',
+  'HR & People Ops',
+  'Operations & Admin',
+];
 
 const AnimatedSection = ({ children, className }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
       className={className}
     >
       {children}
@@ -21,179 +98,187 @@ const AnimatedSection = ({ children, className }) => {
 };
 
 export default function Home() {
-  const roles = ["DevOps", "Cloud", "QA", "Data", "SAP", "Cyber Security"];
-  
   return (
-    <div>
-      {/* 1. HERO SECTION */}
-      <section className="relative min-h-screen flex items-center bg-hire-dark overflow-hidden pt-20">
-        <div className="absolute inset-0 noise-bg z-[1]"></div>
-        
-        {/* Dynamic Glow Background */}
-        <div className="absolute top-1/4 right-0 w-[800px] h-[800px] bg-hire-teal/20 rounded-full blur-[120px] mix-blend-screen pointer-events-none translate-x-1/3"></div>
-        <div className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-hire-accent/10 rounded-full blur-[100px] mix-blend-screen pointer-events-none -translate-y-1/4 -translate-x-1/2"></div>
-        
-        <div className="container mx-auto px-6 lg:px-12 relative z-10 grid lg:grid-cols-12 items-center gap-12">
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="lg:col-span-7 text-hire-light text-center lg:text-left flex flex-col items-center lg:items-start"
-          >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-hire-light/10 bg-hire-light/5 backdrop-blur-sm text-xs md:text-sm font-mono text-hire-accent mb-6 md:mb-8 shadow-[0_0_15px_rgba(232,197,71,0.1)]">
-              <span className="w-2 h-2 rounded-full bg-hire-accent animate-pulse"></span>
-              Transforming Careers Across The UK
-            </div>
-            
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] mb-6 leading-[1.1] md:leading-[1.1] font-light text-balance text-hire-light">
-              Your Career in UK <br className="hidden sm:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-br from-hire-light to-hire-teal font-medium">Tech Starts Here</span>
-            </h1>
-            <p className="text-lg md:text-xl text-hire-light/70 mb-8 md:mb-10 text-balance leading-relaxed max-w-xl">
-              We've placed 89+ professionals into roles at JP Morgan, Amazon, Lloyds & more — complete with full visa sponsorship.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start w-full sm:w-auto">
-              <Link to="/contact" className="w-full sm:w-auto text-center px-8 py-4 bg-hire-accent text-hire-dark font-medium rounded hover:bg-[#d6b43d] transition-all shadow-lg hover:shadow-[0_0_20px_rgba(232,197,71,0.3)]">
-                Book a Free Call
-              </Link>
-              <Link to="/placements" className="w-full sm:w-auto text-center px-8 py-4 flex items-center justify-center gap-2 text-hire-light font-medium border border-hire-light/20 rounded hover:bg-hire-light/10 transition-all group">
-                See Our Placements <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-          </motion.div>
-          
-          <motion.div 
-             initial={{ opacity: 0, scale: 0.95 }}
-             animate={{ opacity: 1, scale: 1 }}
-             transition={{ duration: 1.2, delay: 0.4 }}
-             className="lg:col-span-5 relative hidden lg:block"
-          >
-             {/* Abstract Glassmorphism Visual Block */}
-             <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden border border-hire-light/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-xl p-8 shadow-2xl flex flex-col justify-between">
-                <div>
-                   <div className="w-12 h-12 rounded-lg bg-hire-accent/20 flex items-center justify-center text-hire-accent mb-6 shadow-sm border border-hire-accent/20">
-                     <GraduationCap size={24} />
-                   </div>
-                   <h3 className="text-3xl font-serif text-hire-light leading-tight mb-2">From application<br/>to placement.</h3>
-                   <p className="text-hire-light/60 text-sm">We handle the roadmap, the upskilling, and the network.</p>
+    <div className="bg-hire-surface">
+      <section className="relative min-h-screen overflow-hidden bg-hire-dark">
+        <div className="relative h-full overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=1800"
+            alt="Technology professionals collaborating in a modern office"
+            className="absolute inset-0 h-full w-full object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(8,15,30,0.92)_0%,rgba(8,15,30,0.75)_50%,rgba(8,15,30,0.35)_100%)]"></div>
+          <div className="absolute inset-0 noise-bg opacity-[0.1]"></div>
+
+          <div className="container relative z-10 mx-auto grid min-h-screen items-center gap-12 px-6 pb-16 pt-[112px] lg:grid-cols-[55fr_45fr] lg:px-12">
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, ease: 'easeOut' }}
+                className="max-w-[640px] self-center text-hire-light"
+              >
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-4 py-2 text-[11px] font-mono uppercase tracking-[0.12em] text-white backdrop-blur-sm">
+                  <span className="h-2 w-2 rounded-full bg-hire-accent"></span>
+                  Transforming Careers Across The UK
                 </div>
-                
-                <div className="space-y-3">
-                  {["DevOps & Cloud", "Data Analytics", "Cyber Security", "QA Automation"].map((role, i) => (
-                    <motion.div 
+                <h1 className="mt-6 max-w-[620px] text-[clamp(42px,5vw,68px)] leading-[1.1] font-bold text-balance text-white">
+                  Your Career in UK Tech Starts Here
+                </h1>
+                <p className="mt-5 max-w-[480px] text-[17px] leading-[1.6] text-white/75">
+                  We&apos;ve placed 89+ professionals into roles at JP Morgan, Amazon, Lloyds Banking Group, Zoom, and more with full visa sponsorship support.
+                </p>
+
+                <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center justify-center rounded-[6px] bg-hire-accent px-7 py-3.5 text-center text-[15px] font-bold text-hire-dark transition-all hover:bg-[#d4b15a] hover:shadow-[0_18px_40px_rgba(201,168,76,0.25)]"
+                  >
+                    Book a Free Call
+                  </Link>
+                  <Link
+                    to="/placements"
+                    className="group inline-flex items-center justify-center gap-2 rounded-[6px] border border-white/25 bg-white/10 px-7 py-3.5 text-center text-[15px] font-medium text-white transition-all hover:bg-white/14"
+                  >
+                    See Our Placements
+                    <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, delay: 0.15, ease: 'easeOut' }}
+                className="hidden w-full max-w-[400px] justify-self-end self-center rounded-2xl bg-white p-8 text-hire-dark shadow-[0_24px_60px_rgba(0,0,0,0.35)] lg:flex lg:flex-col"
+              >
+                <div>
+                  <div className="inline-flex items-center rounded-[6px] bg-[#F1F5F9] px-3 py-1.5 text-[11px] font-mono uppercase tracking-[0.1em] text-text-secondary">
+                    Popular Pathways
+                  </div>
+                  <h2 className="mt-4 text-[26px] font-semibold leading-[1.2] text-hire-dark">From application to placement.</h2>
+                  <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+                    We handle the roadmap, the upskilling, and the introductions.
+                  </p>
+                </div>
+
+                <div className="mt-6 space-y-2.5">
+                  {heroRoles.map((role) => (
+                    <div
                       key={role}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.8 + (i * 0.1) }}
-                      className="flex items-center justify-between p-4 rounded-lg bg-hire-dark/60 border border-hire-light/5 hover:border-hire-teal/50 transition-colors"
+                      className="mt-2.5 flex items-center justify-between rounded-lg bg-hire-surface px-4 py-3"
                     >
                       <div className="flex items-center gap-3">
-                         <div className="w-2 h-2 rounded-full bg-hire-teal shadow-[0_0_8px_rgba(28,92,92,0.8)]"></div>
-                         <span className="font-mono text-sm text-hire-light/90">{role}</span>
+                        <div className="h-2.5 w-2.5 rounded-full bg-hire-accent shadow-[0_0_18px_rgba(201,168,76,0.55)]"></div>
+                        <span className="font-semibold text-hire-dark">{role}</span>
                       </div>
-                      <span className="text-hire-accent/80 text-[10px] uppercase tracking-widest font-medium">High Demand</span>
-                    </motion.div>
+                      <span className="text-[10px] font-mono uppercase tracking-[0.1em] text-text-secondary">
+                        High Demand
+                      </span>
+                    </div>
                   ))}
                 </div>
-             </div>
-             
-             {/* Floating Badge */}
-             <motion.div 
-               animate={{ y: [-10, 10, -10] }}
-               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-               className="absolute -right-8 -bottom-8 rounded-xl bg-hire-teal p-6 shadow-[0_20px_40px_rgba(0,0,0,0.4)] border border-hire-light/20 backdrop-blur-md z-20"
-             >
-               <div className="text-4xl font-serif text-hire-light font-bold mb-1">100%</div>
-               <div className="text-sm font-mono text-hire-accent uppercase tracking-widest">Visa Success Rate</div>
-             </motion.div>
-          </motion.div>
+
+                <div className="mt-4 rounded-[10px] bg-hire-accent px-5 py-4 text-hire-dark">
+                  <div className="text-[32px] font-bold leading-none">100%</div>
+                  <div className="mt-2 text-[11px] font-mono uppercase tracking-[0.1em]">
+                    Visa Success Rate
+                  </div>
+                </div>
+              </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* TRUST BAR */}
-      <div className="bg-hire-light py-12 border-b border-hire-dark/5 relative overflow-hidden">
-        <div className="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-16">
-          <div className="shrink-0 md:border-r border-hire-dark/10 md:pr-12 md:mr-4">
-             <p className="text-xs font-bold text-hire-dark/40 font-mono uppercase tracking-widest text-center md:text-left">Trusted By<br/>The Best</p>
-          </div>
-          <div className="flex-1 flex flex-wrap justify-center md:justify-between items-center gap-10 md:gap-6 opacity-80 grayscale hover:grayscale-0 transition-all duration-700">
-             {["JP Morgan", "Amazon", "Lloyds Bank", "Zoom", "Big 4"].map((brand) => (
-                <div key={brand} className="font-serif font-bold text-2xl md:text-3xl tracking-tight text-hire-dark hover:text-hire-teal transition-colors">
+      <div className="border-y border-[#E2E8F0] bg-white py-14 md:py-16">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-sm">
+              <p className="text-xs font-mono uppercase tracking-[0.32em] text-text-secondary">
+                Trusted By The Best
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+                Featured placements. The wider verified employer list appears further down the page.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-4 lg:justify-end">
+              {featuredPlacementCompanies.map((brand) => (
+                <div
+                  key={brand}
+                  className="text-2xl font-bold tracking-tight text-hire-dark transition-colors hover:text-hire-mid md:text-3xl"
+                >
                   {brand}
                 </div>
-             ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* 2. STATS SECTION */}
-      <section className="py-24 bg-white">
+      <section className="bg-white py-24">
         <div className="container mx-auto px-6 lg:px-12">
-          <AnimatedSection className="grid md:grid-cols-3 gap-12 divide-y md:divide-y-0 md:divide-x divide-hire-dark/10">
-            <div className="text-center md:px-8 py-4">
-              <div className="text-5xl font-mono font-medium text-hire-teal mb-4">89+</div>
-              <div className="font-serif text-xl font-medium text-hire-dark">Successful Placements</div>
+          <AnimatedSection className="grid gap-8 rounded-[32px] border border-[#E2E8F0] bg-hire-surface p-10 shadow-[0_18px_70px_rgba(10,22,44,0.08)] md:grid-cols-3 md:divide-x md:divide-[#E2E8F0]">
+            <div className="py-4 text-center md:px-8">
+              <div className="mb-4 text-6xl font-bold text-hire-dark">89+</div>
+              <div className="text-xl font-medium text-hire-dark">Successful Placements</div>
             </div>
-            <div className="text-center md:px-8 py-4">
-              <div className="text-5xl font-mono font-medium text-hire-teal mb-4">4+</div>
-              <div className="font-serif text-xl font-medium text-hire-dark">Years of Proven Success</div>
+            <div className="py-4 text-center md:px-8">
+              <div className="mb-4 text-6xl font-bold text-hire-dark">4+</div>
+              <div className="text-xl font-medium text-hire-dark">Years of Proven Success</div>
             </div>
-            <div className="text-center md:px-8 py-4">
-              <div className="text-5xl font-mono font-medium text-hire-teal mb-4">100%</div>
-              <div className="font-serif text-xl font-medium text-hire-dark">Visa Sponsorship Track Record</div>
+            <div className="py-4 text-center md:px-8">
+              <div className="mb-4 text-6xl font-bold text-hire-dark">100%</div>
+              <div className="text-xl font-medium text-hire-dark">Visa Sponsorship Track Record</div>
             </div>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* 3. WHO WE HELP SECTION */}
-      <section className="py-24 bg-hire-light">
-        <div className="container mx-auto px-6 lg:px-12 object-cover">
-          <AnimatedSection className="text-center mb-16 max-w-2xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-serif text-hire-dark mb-6">Who We Support</h2>
-            <p className="text-lg text-hire-dark/70">Whether you're starting from scratch or looking for a pivot, we have a structured pathway for you.</p>
+      <section className="bg-hire-surface py-24">
+        <div className="container mx-auto px-6 lg:px-12">
+          <AnimatedSection className="mx-auto mb-16 max-w-2xl text-center">
+            <h2 className="mb-6 text-4xl text-hire-dark md:text-5xl">Who We Support</h2>
+            <p className="text-lg text-text-secondary">
+              Whether you&apos;re starting from scratch or looking for a pivot, we have a structured pathway for you.
+            </p>
           </AnimatedSection>
-          
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: GraduationCap, title: "Students", desc: "Start your career on the right foot before graduation." },
-              { icon: Users, title: "Freshers", desc: "Transition from university to your first major IT role." },
-              { icon: Briefcase, title: "Professionals", desc: "Upskill and land higher-paying roles in leading firms." },
-              { icon: RefreshCw, title: "Career Changers", desc: "Pivot from non-tech to a rewarding IT career safely." }
-            ].map((card, i) => (
-              <AnimatedSection key={card.title} className="bg-hire-teal p-8 rounded shadow-lg group hover:bg-hire-dark transition-colors duration-300 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-hire-accent/10 rounded-full blur-3xl group-hover:bg-hire-accent/20 transition-colors"></div>
-                <card.icon className="w-10 h-10 text-hire-accent mb-6" />
-                <h3 className="text-xl font-serif text-hire-light mb-3">{card.title}</h3>
-                <p className="text-hire-light/80 text-sm leading-relaxed">{card.desc}</p>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {supportCards.map((card) => (
+              <AnimatedSection
+                key={card.title}
+                className="group relative overflow-hidden rounded-[28px] border border-hire-mid bg-hire-mid p-8 shadow-[0_20px_45px_rgba(18,31,60,0.24)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_55px_rgba(18,31,60,0.28)]"
+              >
+                <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-hire-accent/20 blur-3xl transition-colors"></div>
+                <card.icon className="mb-6 h-10 w-10 text-hire-accent" />
+                <h3 className="mb-3 text-xl text-white">{card.title}</h3>
+                <p className="text-sm leading-relaxed text-white/85">{card.desc}</p>
               </AnimatedSection>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 4. HOW IT WORKS */}
-      <section className="py-24 bg-white border-b border-hire-dark/5">
+      <section className="border-b border-[#E2E8F0] bg-white py-24">
         <div className="container mx-auto px-6 lg:px-12">
-           <AnimatedSection className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif text-hire-dark mb-6">Your Transformation Process</h2>
+          <AnimatedSection className="mb-16 text-center">
+            <h2 className="mb-6 text-4xl text-hire-dark md:text-5xl">Your Transformation Process</h2>
           </AnimatedSection>
-          
+
           <div className="relative">
-            <div className="hidden md:block absolute top-[60px] left-0 w-full h-[1px] bg-hire-teal/20"></div>
-            <div className="grid md:grid-cols-3 gap-12 relative z-10">
-              {[
-                { step: "01", title: "Free Consultation", desc: "We discuss your background, interests, and visa status to map out possibilities." },
-                { step: "02", title: "Role Matching & Training", desc: "Structured upskilling tailored to high-demand UK roles to get you interview-ready." },
-                { step: "03", title: "Job Offer & Visa", desc: "We connect you with our network, prepare you for interviews, and support via placement." }
-              ].map((item, i) => (
-                <AnimatedSection key={item.step} className="bg-white pt-8 relative">
-                  <div className="w-16 h-16 bg-hire-light border border-hire-teal/20 rounded-full flex items-center justify-center text-2xl font-serif text-hire-teal mb-8 mx-auto md:mx-0 shadow-sm relative z-20">
+            <div className="absolute left-0 top-[60px] hidden h-px w-full bg-[#E2E8F0] md:block"></div>
+            <div className="relative z-10 grid gap-12 md:grid-cols-3">
+              {transformationSteps.map((item) => (
+                <AnimatedSection key={item.step} className="relative rounded-[28px] border border-[#E2E8F0] bg-white p-8 shadow-[0_16px_36px_rgba(10,22,44,0.08)]">
+                  <div className="relative z-20 mb-8 flex h-16 w-16 items-center justify-center rounded-full border border-[#E2E8F0] bg-hire-surface text-2xl font-semibold text-hire-dark shadow-sm">
                     {item.step}
                   </div>
-                  <h3 className="text-xl font-medium text-hire-dark mb-4 text-center md:text-left">{item.title}</h3>
-                  <p className="text-hire-dark/70 text-center md:text-left leading-relaxed">{item.desc}</p>
+                  <h3 className="mb-4 text-center text-xl font-medium text-hire-dark md:text-left">
+                    {item.title}
+                  </h3>
+                  <p className="text-center leading-relaxed text-text-secondary md:text-left">
+                    {item.desc}
+                  </p>
                 </AnimatedSection>
               ))}
             </div>
@@ -201,73 +286,130 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. ROLES SECTION */}
-      <section className="py-24 bg-hire-dark text-hire-light relative overflow-hidden">
-        <div className="container mx-auto px-6 lg:px-12 relative z-10">
-          <AnimatedSection className="grid lg:grid-cols-12 gap-16">
-             <div className="lg:col-span-5 flex flex-col justify-center">
-                <h2 className="text-4xl md:text-5xl font-serif mb-6 text-balance">Specialised IT Pathways</h2>
-                <p className="text-hire-light/70 text-lg mb-8 text-balance">
-                  We don't just place generically. We focus on high-growth areas where 
-                  talent is scarce and visa sponsorships are actively offered.
-                </p>
-                <div className="inline-block">
-                  <Link to="/roles" className="text-hire-accent border-b border-hire-accent/30 hover:border-hire-accent pb-1 transition-colors flex items-center gap-2">
-                    Explore all roles <ArrowRight size={16} />
-                  </Link>
-                </div>
-             </div>
-             
-             <div className="lg:col-span-7 grid sm:grid-cols-2 gap-x-8 gap-y-12">
-                <div>
-                  <h3 className="text-xl font-serif text-hire-accent mb-6 border-b border-hire-light/10 pb-4">Technical Roles</h3>
-                  <ul className="space-y-4">
-                    {["DevOps Engineering", "Cloud Engineering", "QA & Software Testing", "Data Analysis", "Cyber Security", "SAP Consulting"].map((role) => (
-                      <li key={role} className="flex flex-wrap gap-2 items-center group cursor-default">
-                        <CheckCircle2 size={16} className="text-hire-teal group-hover:text-hire-accent transition-colors" />
-                        <span className="font-mono text-sm tracking-tight hover:text-white transition-colors">{role}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-xl font-serif text-hire-accent mb-6 border-b border-hire-light/10 pb-4">Business Roles</h3>
-                  <ul className="space-y-4">
-                    {["Project Management", "Business Analysis", "HR & People Ops", "Operations & Admin"].map((role) => (
-                      <li key={role} className="flex items-center gap-2 group cursor-default">
-                        <CheckCircle2 size={16} className="text-hire-teal group-hover:text-hire-accent transition-colors" />
-                        <span className="font-mono text-sm tracking-tight hover:text-white transition-colors">{role}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-             </div>
+      <section className="relative overflow-hidden bg-hire-dark py-24 text-hire-light">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(201,168,76,0.16),transparent_22%),radial-gradient(circle_at_bottom_left,rgba(36,78,121,0.45),transparent_28%)]"></div>
+        <div className="container relative z-10 mx-auto px-6 lg:px-12">
+          <AnimatedSection className="grid gap-16 lg:grid-cols-12">
+            <div className="flex flex-col justify-center lg:col-span-5">
+              <h2 className="mb-6 text-4xl text-balance text-white md:text-5xl">Specialised IT Pathways</h2>
+              <p className="mb-8 text-lg text-balance text-text-light">
+                We don&apos;t just place generically. We focus on high-growth areas where talent is scarce and visa sponsorships are actively offered.
+              </p>
+              <div className="inline-block">
+                <Link
+                  to="/roles"
+                  className="flex items-center gap-2 border-b border-hire-accent/30 pb-1 text-hire-accent transition-colors hover:border-hire-accent"
+                >
+                  Explore all roles <ArrowRight size={16} />
+                </Link>
+              </div>
+            </div>
+
+            <div className="grid gap-x-8 gap-y-12 lg:col-span-7 sm:grid-cols-2">
+              <div>
+                <h3 className="mb-6 border-b border-hire-light/10 pb-4 text-xl text-hire-accent">
+                  Technical Roles
+                </h3>
+                <ul className="space-y-4">
+                  {technicalRoles.map((role) => (
+                    <li key={role} className="group flex flex-wrap items-center gap-2">
+                      <CheckCircle2 size={16} className="text-hire-accent transition-colors" />
+                      <span className="text-sm tracking-tight text-text-light transition-colors group-hover:text-white">
+                        {role}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="mb-6 border-b border-hire-light/10 pb-4 text-xl text-hire-accent">
+                  Business Roles
+                </h3>
+                <ul className="space-y-4">
+                  {businessRoles.map((role) => (
+                    <li key={role} className="group flex items-center gap-2">
+                      <CheckCircle2 size={16} className="text-hire-accent transition-colors" />
+                      <span className="text-sm tracking-tight text-text-light transition-colors group-hover:text-white">
+                        {role}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </AnimatedSection>
         </div>
       </section>
-      
-      {/* 6. SOCIAL PROOF */}
-      <section className="py-24 bg-hire-light overflow-hidden">
+
+      <section className="bg-white py-24">
         <div className="container mx-auto px-6 lg:px-12">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif text-hire-dark mb-6">Success Stories</h2>
-            <p className="text-lg text-hire-dark/70">Don't just take our word for it. Join 89+ others.</p>
-          </AnimatedSection>
-          
-          <div className="flex gap-6 overflow-x-auto pb-8 snap-x hide-scrollbar">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="min-w-[320px] md:min-w-[400px] snap-center bg-white p-8 rounded shadow-sm border border-hire-dark/5">
-                <div className="flex gap-1 text-hire-accent mb-6">
-                  {[...Array(5)].map((_, idx) => <Star key={idx} size={16} fill="currentColor" />)}
+          <AnimatedSection className="grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
+            <div>
+              <p className="text-sm font-mono uppercase tracking-[0.32em] text-hire-teal">
+                Our Placements
+              </p>
+              <h2 className="mt-6 text-4xl text-hire-dark md:text-5xl">
+                Current verified placements across banking, consulting, SaaS, and engineering.
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed text-text-secondary">
+                A dedicated snapshot of the employers where HireDev candidates have landed roles. The featured strip above stays curated, while the wider placement list lives here.
+              </p>
+              <Link
+                to="/placements"
+                className="mt-8 inline-flex items-center gap-2 rounded-full border border-hire-dark/10 px-6 py-3 font-medium text-hire-dark transition-colors hover:border-hire-teal hover:text-hire-teal"
+              >
+                View full placements page <ArrowRight size={18} />
+              </Link>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {allPlacementCompanies.map((company) => (
+                <div
+                  key={company}
+                  className="group rounded-[24px] border border-[#E2E8F0] bg-hire-surface p-5 shadow-[0_12px_28px_rgba(10,22,44,0.06)] transition-all hover:-translate-y-1 hover:border-hire-dark hover:bg-white"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#E2E8F0] bg-white text-hire-dark shadow-sm">
+                      <Building2 size={18} />
+                    </div>
+                    <div className="text-lg font-semibold text-hire-dark">{company}</div>
+                  </div>
                 </div>
-                <blockquote className="font-serif italic text-lg text-hire-dark mb-8 leading-relaxed">
-                  "HireDev helped me transition from a totally different field. They upskilled me, prepared me for the interview, and got me into a great role with full visa sponsorship."
+              ))}
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      <section className="bg-hire-surface py-24">
+        <div className="container mx-auto px-6 lg:px-12">
+          <AnimatedSection className="mb-16 text-center">
+            <h2 className="mb-6 text-4xl text-hire-dark md:text-5xl">Success Stories</h2>
+            <p className="text-lg text-text-secondary">Don&apos;t just take our word for it. Join 89+ others.</p>
+          </AnimatedSection>
+
+          <div className="hide-scrollbar flex snap-x gap-6 overflow-x-auto pb-8">
+            {[1, 2, 3].map((index) => (
+              <div
+                key={index}
+                className="min-w-[320px] snap-center rounded-[28px] border border-[#E2E8F0] bg-white p-8 shadow-[0_16px_34px_rgba(10,22,44,0.08)] md:min-w-[400px]"
+              >
+                <div className="mb-6 flex gap-1 text-hire-accent">
+                  {[...Array(5)].map((_, starIndex) => (
+                    <Star key={starIndex} size={16} fill="currentColor" />
+                  ))}
+                </div>
+                <blockquote className="mb-8 text-lg leading-relaxed text-hire-dark italic">
+                  &quot;HireDev helped me transition from a totally different field. They upskilled me, prepared me for the interview, and got me into a great role with full visa sponsorship.&quot;
                 </blockquote>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-hire-teal/10 rounded-full flex items-center justify-center text-hire-teal font-serif font-bold">A.K.</div>
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-hire-light font-bold text-hire-dark">
+                    A.K.
+                  </div>
                   <div>
-                    <div className="font-bold text-hire-dark text-sm">Placed as DevOps Engineer</div>
-                    <div className="text-xs text-hire-dark/60 font-mono mt-1">Tier 2 Visa Sponsored</div>
+                    <div className="text-sm font-bold text-hire-dark">Placed as DevOps Engineer</div>
+                    <div className="mt-1 text-xs text-text-secondary">Tier 2 Visa Sponsored</div>
                   </div>
                 </div>
               </div>
@@ -276,25 +418,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. CTA SECTION */}
-      <section className="py-24 bg-hire-teal relative overflow-hidden">
-         <div className="absolute inset-0 noise-bg z-0 opacity-10"></div>
-         <div className="container mx-auto px-6 lg:px-12 relative z-10 text-center max-w-3xl">
-           <h2 className="text-4xl md:text-6xl font-serif text-hire-light mb-6">Ready to Switch to IT?</h2>
-           <p className="text-xl text-hire-light/80 mb-10 text-balance">
-             Take the first step toward a rewarding, high-paying career in the UK tech market.
-           </p>
-           <div className="flex flex-col sm:flex-row justify-center gap-4">
-             <a href="https://wa.me/447424382023" target="_blank" rel="noreferrer" className="px-8 py-4 bg-[#25D366] text-white font-medium rounded hover:bg-[#1EBE5D] transition-colors flex items-center justify-center gap-2">
-               Chat on WhatsApp
-             </a>
-             <Link to="/contact" className="px-8 py-4 bg-transparent border border-hire-light text-hire-light font-medium rounded hover:bg-hire-light hover:text-hire-teal transition-colors">
-               Email Inquiry
-             </Link>
-           </div>
-         </div>
+      <section className="relative overflow-hidden bg-hire-dark py-24">
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,#0F1E3C_0%,#1C2E4A_100%)]"></div>
+        <div className="absolute inset-0 noise-bg opacity-10"></div>
+        <div className="container relative z-10 mx-auto max-w-3xl px-6 text-center lg:px-12">
+          <h2 className="mb-6 text-4xl text-hire-light md:text-6xl">Ready to Switch to IT?</h2>
+          <p className="mb-10 text-xl text-balance text-text-light">
+            Take the first step toward a rewarding, high-paying career in the UK tech market.
+          </p>
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
+            <a
+              href="https://wa.me/447424382023"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-8 py-4 font-medium text-white transition-colors hover:bg-[#1EBE5D]"
+            >
+              Chat on WhatsApp
+            </a>
+            <Link
+              to="/contact"
+              className="rounded-full border border-white bg-transparent px-8 py-4 font-medium text-white transition-colors hover:bg-white/10 hover:text-white"
+            >
+              Email Inquiry
+            </Link>
+          </div>
+        </div>
       </section>
-
     </div>
   );
 }
