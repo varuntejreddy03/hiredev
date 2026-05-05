@@ -80,6 +80,59 @@ const businessRoles = [
   'Operations & Admin',
 ];
 
+const testimonials = [
+  {
+    name: 'Ganesh V',
+    initials: 'GV',
+    quote: 'I had a really positive experience with IT Jobs in London. As someone transitioning from a student to securing a DevOps role, their guidance made a big difference. They supported me with job applications, interview preparation, and documentation. What stood out most was the ongoing support even after getting a job — they stayed in touch and helped during my probation period.',
+  },
+  {
+    name: 'Surthi',
+    initials: 'S',
+    quote: 'I had some initial fears before joining, especially as an Indian migrant, since trust doesn\'t come easily when starting something new in a different country. They arranged a call with one of their previous placements, which genuinely boosted my confidence. Thanks to their support, I landed a great role and I\'ve been working there for the past 8 months without any extra stress.',
+  },
+  {
+    name: 'Rahul Jaat',
+    initials: 'RJ',
+    quote: 'Great service and very supportive team. They guided me properly and helped me land a job without stress. Highly recommended!',
+  },
+  {
+    name: 'Preeti',
+    initials: 'P',
+    quote: 'I had a lot of doubts before joining, especially coming from a different background. But the way they handled my concerns and supported me throughout really built my confidence. From applications to interviews, everything was well guided. Today I\'m in a stable role and very happy with the outcome.',
+  },
+  {
+    name: 'Siva Sankar',
+    initials: 'SS',
+    quote: 'Me and my friend joined at the same time in 2022 when the market was crashing, so we were honestly unsure in the beginning. I got placed within 30 days, and my friend within 22 days, which was beyond what we expected. They guided us step by step and kept things clear and practical.',
+  },
+  {
+    name: 'Nitish',
+    initials: 'N',
+    quote: 'Very result-oriented support. I was able to secure a role within a short time thanks to their guidance. They helped with interviews, documentation, and overall preparation. Everything was structured and clear.',
+  },
+  {
+    name: 'Robin',
+    initials: 'R',
+    quote: 'They helped me get placed in an internship. Good service and very supportive team throughout the process.',
+  },
+  {
+    name: 'Sai Varma',
+    initials: 'SV',
+    quote: 'I got placed in an internship through them. The service was really good, and they were supportive at every step.',
+  },
+  {
+    name: 'Ravali',
+    initials: 'R',
+    quote: 'Good service. Helped me secure an internship smoothly. Highly recommend.',
+  },
+  {
+    name: 'Harish',
+    initials: 'H',
+    quote: 'Really good experience! They helped me land an internship and supported me throughout.',
+  },
+];
+
 const AnimatedSection = ({ children, className }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -390,27 +443,24 @@ export default function Home() {
           </AnimatedSection>
 
           <div className="hide-scrollbar flex snap-x gap-6 overflow-x-auto pb-8">
-            {[1, 2, 3].map((index) => (
+            {testimonials.map((t) => (
               <div
-                key={index}
+                key={t.name}
                 className="min-w-[320px] snap-center rounded-[28px] border border-[#E2E8F0] bg-white p-8 shadow-[0_16px_34px_rgba(10,22,44,0.08)] md:min-w-[400px]"
               >
                 <div className="mb-6 flex gap-1 text-hire-accent">
-                  {[...Array(5)].map((_, starIndex) => (
-                    <Star key={starIndex} size={16} fill="currentColor" />
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={16} fill="currentColor" />
                   ))}
                 </div>
-                <blockquote className="mb-8 text-lg leading-relaxed text-hire-dark italic">
-                  &quot;HireDev helped me transition from a totally different field. They upskilled me, prepared me for the interview, and got me into a great role with full visa sponsorship.&quot;
+                <blockquote className="mb-8 text-[15px] leading-relaxed text-hire-dark italic">
+                  &quot;{t.quote}&quot;
                 </blockquote>
                 <div className="flex items-center gap-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-hire-light font-bold text-hire-dark">
-                    A.K.
+                    {t.initials}
                   </div>
-                  <div>
-                    <div className="text-sm font-bold text-hire-dark">Placed as DevOps Engineer</div>
-                    <div className="mt-1 text-xs text-text-secondary">Tier 2 Visa Sponsored</div>
-                  </div>
+                  <div className="text-sm font-bold text-hire-dark">{t.name}</div>
                 </div>
               </div>
             ))}

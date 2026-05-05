@@ -47,26 +47,12 @@ export default function Navbar() {
 
       <div className="container relative mx-auto h-full px-6 lg:px-12">
         <div className="grid h-full grid-cols-[auto_1fr_auto] items-center gap-6">
-          <Link to="/" className="group flex items-center gap-3 text-white" onClick={() => setIsOpen(false)}>
-            <svg
-              width="34"
-              height="34"
-              viewBox="0 0 100 100"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
-            >
-              <defs>
-                <linearGradient id="logo-trend" x1="0%" y1="100%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#C9A84C" />
-                  <stop offset="100%" stopColor="#C9A84C" stopOpacity="0.45" />
-                </linearGradient>
-              </defs>
-              <rect x="18" y="15" width="16" height="70" rx="2" fill="currentColor" />
-              <rect x="66" y="15" width="16" height="70" rx="2" fill="currentColor" />
-              <path d="M18 70 L82 25 L82 43 L18 88 Z" fill="url(#logo-trend)" />
-            </svg>
-            <span className="text-[1.6rem] font-semibold tracking-tight">HireDev</span>
+          <Link to="/" className="group flex items-center gap-2 text-white" onClick={() => setIsOpen(false)}>
+            <img
+              src="/Logo_Cropped-removebg-preview.png"
+              alt="IT Jobs London"
+              className="h-[45px] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            />
           </Link>
 
           <div className="hidden min-w-0 justify-center md:flex">
